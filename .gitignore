@@ -1,0 +1,22 @@
+﻿# Generated artifacts
+outputs/
+models/*.pkl
+models/*.joblib
+*.zip
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+
+# Raw/local datasets
+data/*.csv
+data/*.parquet
+data/*.xlsx
+!data/README.md
+
+# Keep curated public result summaries/figures
+!results/**
+!docs/**
