@@ -45,6 +45,7 @@ This reduction is a strength of the project: it reports a more conservative resu
 ```text
 .
 ├── scripts/                 # Numbered analysis pipeline scripts
+├── hf_risk_render/          # Render-ready live Flask tool and model artifacts
 ├── docs/                    # Designed static project page for GitHub Pages
 ├── docs/assets/             # Website/chart assets
 ├── results/figures/         # Selected generated figures
@@ -70,6 +71,34 @@ This reduction is a strength of the project: it reports a more conservative resu
 | `09_mimic_only_xgboost.py` | Separate MIMIC-only benchmark model |
 | `10_advanced_evaluation.py` | Calibration, Decision Curve Analysis, gender/CKD subgroup checks |
 | `run_hf_risk_colab.ipynb` | Colab runner for heavier compute |
+
+## Live Tool Deployment
+
+The repo also contains a dedicated Render deployment app in `hf_risk_render/`.
+
+- **Purpose:** host the live HF-RISK research prototype
+- **Stack:** Flask + Gunicorn
+- **Inputs:** curated discharge-time fields
+- **Outputs:** 4 real model probabilities + patient-level SHAP for 6-month mortality
+
+If you deploy on Render:
+
+- choose **Web Service**
+- connect this repository
+- set **Root Directory** to `hf_risk_render`
+- use:
+
+```bash
+pip install -r requirements.txt
+```
+
+as the build command, and:
+
+```bash
+gunicorn app:app
+```
+
+as the start command.
 
 ## Data Design
 
