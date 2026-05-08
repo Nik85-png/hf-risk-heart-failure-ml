@@ -25,7 +25,7 @@ PARENT_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
-PUBLIC_TOOL_URL = os.getenv("PUBLIC_TOOL_URL", "https://hf-risk-live.onrender.com")
+PUBLIC_TOOL_URL = os.getenv("PUBLIC_TOOL_URL", "https://hf-risk-heart-failure-ml.onrender.com")
 
 app = Flask(__name__)
 
@@ -179,6 +179,8 @@ for outcome in OUTCOME_ORDER:
     CLASSIFIERS[outcome] = get_classifier(model)
 
 SHAP_EXPLAINER = shap.TreeExplainer(CLASSIFIERS["6m_death"])
+BASELINE_HUMAN_FRAME, BASELINE_MODEL_FRAME = None, None
+BASELINE_PROBABILITIES = {}
 
 
 def build_feature_row(payload):
@@ -283,17 +285,31 @@ def prediction_payload(model_frame):
     rows = []
     for outcome in OUTCOME_ORDER:
         probability = float(MODELS[outcome].predict_proba(model_frame)[:, 1][0])
+        baseline_probability = BASELINE_PROBABILITIES.get(outcome, 0.0)
         rows.append(
             {
                 "outcome": outcome,
                 "label": OUTCOME_DISPLAY[outcome],
                 "probability": probability,
-                "percent": round(probability * 100, 1),
+                "percent": probability * 100,
+                "delta_percent_points": (probability - baseline_probability) * 100,
+                "baseline_percent": baseline_probability * 100,
                 "model_name": BEST_INFO.get(outcome, {}).get("name", "Model"),
                 "internal_auc": BEST_INFO.get(outcome, {}).get("test_auc"),
             }
         )
     return rows
+
+
+def _baseline_probabilities():
+    _, baseline_model_frame = build_feature_row({})
+    results = {}
+    for outcome in OUTCOME_ORDER:
+        results[outcome] = float(MODELS[outcome].predict_proba(baseline_model_frame)[:, 1][0])
+    return results
+
+
+BASELINE_PROBABILITIES = _baseline_probabilities()
 
 
 @app.after_request

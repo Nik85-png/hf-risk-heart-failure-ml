@@ -33,7 +33,7 @@
             <span class="section-label">Input form</span>
             <h2>Enter discharge-time clinical information</h2>
           </div>
-          <p>Only the most interpretable variables are surfaced here. The remaining model-required inputs are filled with training-set medians behind the scenes.</p>
+          <p>Only the most interpretable variables are surfaced here. The remaining model-required inputs are filled with training-set medians behind the scenes, so the headline risk should be read as a cohort-aware estimate rather than a bedside score.</p>
         </div>
 
         <form id="risk-form" class="form-grid">
@@ -75,7 +75,7 @@
             <button class="primary-btn" type="submit">Run live prediction</button>
             <button class="secondary-btn" type="reset" id="reset-form">Reset defaults</button>
           </div>
-          <p class="form-note">Assumption: this tool is scoped to hospitalised heart-failure patients at discharge. Probabilities are model outputs, not recommendations.</p>
+          <p class="form-note">Assumption: this tool is scoped to hospitalised heart-failure patients at discharge. Probabilities are model outputs, not recommendations. Very small mortality risks may change in basis points rather than whole percentages.</p>
         </form>
       </div>
 

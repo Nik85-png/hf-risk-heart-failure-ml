@@ -21,6 +21,20 @@
     return payload;
   }
 
+
+  function formatPercent(probability) {
+    const percent = probability * 100;
+    if (probability === 0) return '0.0%';
+    if (percent < 0.1) return '<0.1%';
+    if (percent < 1) return `${percent.toFixed(2)}%`;
+    return `${percent.toFixed(1)}%`;
+  }
+
+  function formatDelta(deltaPercentPoints) {
+    const sign = deltaPercentPoints >= 0 ? '+' : '-';
+    return `${sign}${Math.abs(deltaPercentPoints).toFixed(1)} pts`;
+  }
+
   function renderPredictions(rows) {
     predictionGrid.innerHTML = rows.map((row) => {
       const width = Math.max(1, Math.min(100, row.percent));
@@ -29,9 +43,9 @@
           <header>
             <div>
               <h3>${row.label}</h3>
-              <div class="meta">${row.model_name} ? internal AUROC ${Number(row.internal_auc).toFixed(3)}</div>
+              <div class="meta">${row.model_name} - internal AUROC ${Number(row.internal_auc).toFixed(3)} - ${formatDelta(row.delta_percent_points)} vs baseline</div>
             </div>
-            <div class="metric">${row.percent.toFixed(1)}%</div>
+            <div class="metric">${formatPercent(row.probability)}</div>
           </header>
           <div class="risk-track"><i style="width:${width}%"></i></div>
         </article>
@@ -40,7 +54,7 @@
   }
 
   function contributionItem(item, klass) {
-    const sign = item.shap_value >= 0 ? '+' : '?';
+    const sign = item.shap_value >= 0 ? '+' : '-';
     return `
       <li>
         <strong>${item.feature}</strong>
@@ -64,11 +78,11 @@
     absoluteList.innerHTML = shap.top_absolute.map((item) => {
       const width = Math.max(8, (Math.abs(item.shap_value) / maxAbs) * 100);
       const klass = item.shap_value >= 0 ? 'up' : 'down';
-      const sign = item.shap_value >= 0 ? '+' : '?';
+      const sign = item.shap_value >= 0 ? '+' : '-';
       return `
         <div class="waterfall-item">
           <strong>${item.feature}</strong>
-          <small>Value ${formatValue(item.value)} ? ${sign}${Math.abs(item.shap_value).toFixed(3)} SHAP</small>
+          <small>Value ${formatValue(item.value)} - ${sign}${Math.abs(item.shap_value).toFixed(3)} SHAP</small>
           <div class="waterfall-bar"><i class="${klass}" style="width:${width}%"></i></div>
         </div>
       `;
@@ -76,7 +90,7 @@
   }
 
   async function submitForm() {
-    statusText.textContent = 'Running live prediction?';
+    statusText.textContent = 'Running live prediction...';
     const payload = toPayload(new FormData(form));
     const response = await fetch('/api/predict', {
       method: 'POST',
