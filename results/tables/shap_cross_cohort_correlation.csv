@@ -1,0 +1,9 @@
+zhang_feature,mimic_feature,zhang_rank,zhang_mean_abs_shap,mimic_rank_full,mimic_mean_abs_shap_full,mimic_rank_icu,mimic_mean_abs_shap_icu,note
+GCS,,1,0.750208,,,,,MIMIC excludes gcs_total (placeholder artefact where verbal is untestable); MIMIC uses the three components instead.
+moderate_to_severe_chronic_kidney_disease,moderate_to_severe_ckd,2,0.64767355,21.0,0.07143681,22.0,0.090149276,
+liver_disease,liver_disease,5,0.3666455,31.0,0.007835621,34.0,0.006523278,
+congestive_heart_failure,congestive_heart_failure,6,0.357083,37.0,0.0,36.0,0.0,
+eye_opening,eye_opening,7,0.33740944,5.0,0.1814923,7.0,0.27379465,
+brain_natriuretic_peptide,brain_natriuretic_peptide,13,0.1862327,24.0,0.05400085,25.0,0.05029859,
+gender,gender,14,0.16988823,27.0,0.034293894,30.0,0.022595135,
+movement,movement,18,0.13287944,9.0,0.13833907,6.0,0.2911041,

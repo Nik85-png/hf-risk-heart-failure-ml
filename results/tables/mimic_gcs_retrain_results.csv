@@ -1,0 +1,13 @@
+model_tag,target_col,cohort,n_features,cv_auc_mean,cv_auc_std,test_auc,auc_delta_vs_baseline,delta_95ci_low,delta_95ci_high,n_test,n_positive_test
+expanded_baseline,death_within_28days,full,34,0.9002,0.0033,0.8834,,,,8749,874
+expanded_plus_gcs,death_within_28days,full,37,0.9146,0.0025,0.8972,0.0138,0.009,0.0194,8749,874
+baseline_plus_icu_flag,death_within_28days,full,35,0.9068,0.0037,0.8915,0.008,0.0037,0.0125,8749,874
+expanded_plus_icu_flag_plus_gcs,death_within_28days,full,38,0.9155,0.0033,0.9,0.0166,0.0119,0.022,8749,874
+expanded_plus_gcs_v0as1,death_within_28days,full,37,0.915,0.0018,0.8975,0.0141,0.0091,0.0195,8749,874
+expanded_baseline,death_within_6months,full,34,0.8318,0.0069,0.8266,,,,8749,1830
+expanded_plus_gcs,death_within_6months,full,37,0.8393,0.0058,0.8352,0.0086,0.0054,0.012,8749,1830
+baseline_plus_icu_flag,death_within_6months,full,35,0.8326,0.0064,0.828,0.0014,-0.0012,0.004,8749,1830
+expanded_plus_icu_flag_plus_gcs,death_within_6months,full,38,0.8393,0.0065,0.837,0.0104,0.0073,0.0136,8749,1830
+expanded_plus_gcs_v0as1,death_within_6months,full,37,0.8393,0.006,0.8354,0.0088,0.0057,0.0119,8749,1830
+expanded_baseline_icu_only,death_within_6months,icu_only,34,,,0.8557,,,,2514,876
+expanded_plus_gcs_icu_only,death_within_6months,icu_only,37,,,0.8766,0.0208,0.0141,0.0274,2514,876

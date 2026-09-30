@@ -11,6 +11,9 @@ venv/
 .env
 .env.*
 
+# Google ADC / OAuth local artifacts - never commit
+application_default_credentials.json
+
 # Raw/local datasets
 data/*.csv
 data/*.parquet
